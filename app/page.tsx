@@ -2,6 +2,7 @@
 
 
 import React from "react";
+import Image from "next/image";
 import {
   FileText,
   PenSquare,
@@ -13,7 +14,7 @@ import {
   Users,
   RotateCw,
   Flag,
-  Pencil,
+
   AlertTriangle,
   ChevronRight,
   Play,
@@ -269,19 +270,14 @@ export default function ProductionDashboard() {
         {/* Header */}
         <div className="flex flex-wrap items-center gap-8 rounded-xl border border-white/10 bg-black/40 backdrop-blur-sm px-6 py-5">
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-black">
-              <Pencil className="h-5 w-5 text-yellow-400" />
-            </div>
-            <div className="leading-tight">
-              <p className="text-base font-extrabold tracking-tight text-white">
-                SOLOBUILD
-                <br />
-                MEDIA
-              </p>
-              <p className="text-[10px] font-semibold tracking-wide text-white/40">
-                2D ANIMATION STUDIO
-              </p>
-            </div>
+            <Image
+              src="/logo.png"
+              alt="SoloBuild Media"
+              width={180}
+              height={180}
+              className="h-20 w-auto object-contain"
+              priority
+            />
           </div>
 
           <div className="h-10 w-px bg-white/10" />
