@@ -2,7 +2,7 @@
 
 
 import React from "react";
-import Image from "next/image";
+
 import {
   FileText,
   PenSquare,
@@ -18,7 +18,10 @@ import {
   AlertTriangle,
   ChevronRight,
   Play,
+  LogOut,
 } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 /* ----------------------------- Types ----------------------------- */
 
@@ -259,6 +262,23 @@ function PipelineStepView({ step, isLast }: { step: PipelineStep; isLast: boolea
 /* ----------------------------- Main Component ----------------------------- */
 
 export default function ProductionDashboard() {
+  const { user, isLoading, logout } = useAuth();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if (!isLoading && !user) {
+      router.push("/login");
+    }
+  }, [user, isLoading, router]);
+
+  if (isLoading || !user) {
+    return (
+      <div className="min-h-screen w-full flex items-center justify-center bg-slate-950">
+        <div className="text-white/50 animate-pulse">Loading dashboard...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
       {/* Slate-950 base */}
@@ -270,14 +290,14 @@ export default function ProductionDashboard() {
         {/* Header */}
         <div className="flex flex-wrap items-center gap-8 rounded-xl border border-white/10 bg-black/40 backdrop-blur-sm px-6 py-5">
           <div className="flex items-center gap-3">
-            <Image
-              src="/logo.png"
-              alt="SoloBuild Media"
-              width={180}
-              height={180}
-              className="h-20 w-auto object-contain"
-              priority
-            />
+            <div className="flex flex-col">
+              <span className="text-2xl font-extrabold tracking-tight text-white leading-none">
+                Zobcity
+              </span>
+              <span className="text-sm font-semibold tracking-widest uppercase bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
+                Animations
+              </span>
+            </div>
           </div>
 
           <div className="h-10 w-px bg-white/10" />
@@ -320,6 +340,16 @@ export default function ProductionDashboard() {
               <span className="font-semibold">Current Milestone: </span>
               <span className="font-bold text-violet-400">Storyboard</span>
             </p>
+          </div>
+
+          <div className="ml-auto">
+            <button
+              onClick={logout}
+              className="flex items-center gap-2 rounded-lg bg-white/5 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-white/10 hover:text-red-400"
+            >
+              <LogOut className="h-4 w-4" />
+              <span>Logout</span>
+            </button>
           </div>
         </div>
 
